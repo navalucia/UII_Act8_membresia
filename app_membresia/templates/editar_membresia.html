@@ -1,0 +1,41 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <title>Editar Membresía</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { max-width: 400px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        button, a { margin-top: 15px; display: inline-block; padding: 8px 12px; background: #1976d2; color: white; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; }
+        a { background: #888; }
+    </style>
+    </head>
+    <body>
+    <h1>Editar Membresía</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="{{ membresia.nombre }}" required>
+
+        <label>Descripción:</label>
+        <textarea name="descripcion" rows="3">{{ membresia.descripcion }}</textarea>
+
+        <label>Costo mensual:</label>
+        <input type="number" name="costo_mensual" step="0.01" value="{{ membresia.costo_mensual }}" required>
+
+        <label>
+        <input type="checkbox" name="acceso_limitado" {% if membresia.acceso_limitado %}checked{% endif %}> Acceso limitado
+        </label>
+
+        <label>
+        <input type="checkbox" name="acceso_entrenador" {% if membresia.acceso_entrenador %}checked{% endif %}> Acceso a entrenador
+        </label>
+
+        <button type="submit">Actualizar</button>
+        <a href="{% url 'inicio' %}">Cancelar</a>
+    </form>
+    </body>
+    </html>

@@ -1,0 +1,53 @@
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <title>Lista de Membresías</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #1976d2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f0f0f0; }
+        a.btn { background-color: #1976d2; color: #fff; padding: 6px 12px; border-radius: 4px; text-decoration: none; }
+    </style>
+    </head>
+    <body>
+    <h1>Lista de Membresías</h1>
+    <p><a href="{% url 'agregar_membresia' %}" class="btn">Agregar nueva membresía</a></p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Costo mensual</th>
+            <th>Acceso limitado</th>
+            <th>Acceso entrenador</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for m in membresias %}
+        <tr>
+            <td>{{ m.id_membresia }}</td>
+            <td>{{ m.nombre }}</td>
+            <td>{{ m.descripcion }}</td>
+            <td>${{ m.costo_mensual }}</td>
+            <td>{% if m.acceso_limitado %}Sí{% else %}No{% endif %}</td>
+            <td>{% if m.acceso_entrenador %}Sí{% else %}No{% endif %}</td>
+            <td>
+            <a href="{% url 'editar_membresia' m.id_membresia %}">Editar</a> |
+            <a href="{% url 'borrar_membresia' m.id_membresia %}">Borrar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No hay membresías registradas.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </body>
+    </html>
